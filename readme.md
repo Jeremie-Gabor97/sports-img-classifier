@@ -1,6 +1,7 @@
 
 Sports classifier created on top of pytorch using the fastai library.
 The deployed model can be used at: 
+http://sports-img-classifier.appspot.com/
 
 The classifier was trained using the sports data set by  Li-Jia Li and Li Fei-Fei as part of their paper What, where and who? Classifying event by scene and object recognition . IEEE Intern. Conf. in Computer Vision (ICCV). 2007. The dataset contains images of 8 sports event categories: rock climbing, badminton, bocce, croquet, polo, rowing, sailing and snowboarding.
 
