@@ -8,8 +8,8 @@ from io import BytesIO
 from fastai import *
 from fastai.vision import *
 
-model_file_url = 'https://drive.google.com/uc?export=download&id=1DXZ4OD-BjGiSZw5jrhYq686It4OcG7yf'
-model_file_name = 'model'
+export_file_url = 'https://drive.google.com/uc?export=download&id=1DXZ4OD-BjGiSZw5jrhYq686It4OcG7yf'
+export_file_name = 'export.pkl'
 classes = ['RockClimbing',
  'badminton',
  'bocce',
@@ -32,11 +32,17 @@ async def download_file(url, dest):
             with open(dest, 'wb') as f: f.write(data)
 
 async def setup_learner():
-    await download_file(model_file_url, path/'models'/f'{model_file_name}.pth')
-    data_bunch = ImageDataBunch.single_from_classes(path, classes,
-        ds_tfms=get_transforms(), size=224).normalize(imagenet_stats)
-    learn = cnn_learner(data_bunch, models.resnet34, pretrained=False)
-    learn.load(model_file_name)
+    await download_file(export_file_url, path / 'models' / export_file_name)
+    try:
+        learn = load_learner(path/ 'models', export_file_name)
+        return learn
+    except RuntimeError as e:
+        if len(e.args) > 0 and 'CPU-only machine' in e.args[0]:
+            print(e)
+            message = "\n\nThis model was trained with an old version of fastai and will not work in a CPU environment.\n\nPlease update the fastai library in your training environment and export your model again.\n\nSee instructions for 'Returning to work' at https://course.fast.ai."
+            raise RuntimeError(message)
+        else:
+            raise
     return learn
 
 loop = asyncio.get_event_loop()
