@@ -26,17 +26,17 @@ Deploying to google cloud
 1. Create a new project
 2. Make sure to activate google cloud shell (I had to do this manually)
 3. In the terminal window that pops up, run
----
+```
 gcloud app create
----
+```
 4. Select the geographical location nearest to you
 5. clone your repository that contains your app, the requirements file and so on.
----
+```
 git clone https://github.com/Jeremie-Gabor97/sports-img-classifier
----
+```
 6. cd into your project
 7. Deploy app to google engine. Enter Y when prompted
----
+```
 gcloud app deploy
----
+```
 8. After several minutes, your project should be available at the "target url:" specified in the terminal window
